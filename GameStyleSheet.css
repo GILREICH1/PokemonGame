@@ -1,0 +1,97 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.endgame {
+    /* centre on screen */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /*extra  */
+    text-align: center;
+    padding: 10px;
+    font-size: 100px;
+    z-index: 10;
+    background-color: white;
+}
+
+.endgame img {
+    width: 25%;
+}
+
+button {
+    font-size: 100px;
+    padding: 100px;
+    margin: 100px;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: blue;
+    cursor: pointer;
+}
+
+#selectionScreen {
+    display: flex;
+    flex-direction: column;
+    /* stop text overflowing */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    /* centre on screen */
+    text-align: center;
+    margin: auto;
+    width: 50%;
+    justify-content: center;
+    padding: 10px;
+    border: 10px solid tomato;
+    font-size: 200px;
+    z-index: 10;
+    background-color: white;
+}
+
+.break {
+    height: 10px;
+}
+
+.selectionDiv {
+    padding: 20px;
+    margin: auto;
+}
+
+.selectionImg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    transition: all 200ms;
+}
+
+.selectionImg:hover {
+    opacity: 50%;
+    cursor: pointer;
+}
+
+#board {
+    display: block;
+    margin: auto;
+    width: 50%;
+    justify-content: center;
+
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+}
+
+.tile {
+    flex: 1;
+    max-width: 100%;
+    height: auto;
+    max-height: 310px;
+}

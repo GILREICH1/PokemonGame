@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="GameStyleSheet.css" media="screen"/>
+    <link rel="shortcut icon" type="image/jpg" href="./media/grass_texture.png"/>
+    <title>Pokemon Trainer</title>
+</head>
+<body>
+    <div id='selectionScreen'>
+        <h2>Choose Your Starter</h2>
+        <div class='break'></div>
+        <div class='selectionDiv'>
+            <p>Squirtle (easy)</p>
+            <img class='selectionImg' src="./Media/selectionScreenMedia/squirtle-256x256.png" id='squirtle'><img>
+        </div>
+        <div class='selectionDiv'>
+            <p>Pikachu (medium)</p>
+            <img class='selectionImg' src="./media/selectionScreenMedia/pikachu_.jpg" id='pikachu'><img>
+        </div>
+        <div class='selectionDiv'>
+            <p>Bulbasaur (hard)</p>
+            <img class='selectionImg' src="./media/selectionScreenMedia/bulbasaur.png" id='bulbasaur'><img>
+        </div>
+    </div>
+    <div class='endgame' id="winScreen">
+        <h2>You Win!</h2>
+        <div class='break'></div>
+        <img id="winImage">
+        <button onClick="window.location.reload();">Play Again</button>
+    </div>
+    <div class='endgame' id="loseScreen">
+        <h2>Oh no!</h2>
+        <div class='break'></div>
+        <img id='loseImage'>
+        <button onClick="window.location.reload();">Play Again</button>
+    </div>
+    <div id='board'></div>
+    <audio autoplay>
+        <source src="./Media/Audio/pokemon_center.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+      </audio>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script src="index.js"></script>
+</body>
+</html>
