@@ -1,3 +1,3 @@
 # PokemonGame
 Small browser game.  
-Edits/amends welcome.
+PRs welcome
