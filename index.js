@@ -67,15 +67,17 @@ $(function () {
     }
 
     function generateObstacleArr(x, y) {
-        let res = [];
-        for (let i = 0; i < Math.floor((y * x) * .1); i++) {
-            let obstacleCoords = generateRandomCoords(x, y)
-            res.push({
-                x: obstacleCoords[1],
-                y: obstacleCoords[0]
+        const obstacles = [];
+        const obstaclePercent = 0.1;
+        const obastaclesCount = Math.floor((y * x) * obstaclePercent);
+        for (let i = 0; i < obastaclesCount; i++) {
+            const [obstacleY, obstacleX] = generateRandomCoords(x, y)
+            obstacles.push({
+                x: obstacleX,
+                y: obstacleY
             });
         }
-        return res;
+        return obstacles;
     }
 
     function generateRandomCoords(xMax, yMax) {
