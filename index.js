@@ -72,9 +72,9 @@ $(function () {
         return res;
     }
 
-    function generateRandomCoords(...max) {
-        let x = Math.floor(Math.random() * max[0]);
-        let y = Math.floor(Math.random() * max[1]);
+    function generateRandomCoords(xMax, yMax) {
+        const x = Math.floor(Math.random() * xMax);
+        const y = Math.floor(Math.random() * yMax);
         return [x, y]
     };
 
