@@ -127,17 +127,22 @@ $(function () {
         })
     }
 
-    function renderBoard(array, direction) {
-        array.forEach(arrEl => {
-            let div = $('<span class=row></span>');
-            $('#board').append(div);
-            arrEl.forEach(el => {
-                if (el.el === avatar) {
-                    div.append(`<img src='${avatarLink}${direction}.png' id='[${el.x},${el.y}]' class='tile'></img>`);
-                } else {
-                    div.append(`<img src='${el.el}' id='${el}' class='tile'></img>`);
-                }
+    function makeTileImage (el, direction){
+        const image = $('<img>');
+        let src = el === avatar ? `${avatarLink}${direction}.png` : el;
+        image.addClass('tile');
+        image.attr('src',src);
+        return image;
+    }
+
+    function renderBoard(board, direction) {
+        board.forEach(row => {
+            let rowDiv = $('<span class=row></span>');
+            row.forEach((tile) => {
+                const tileImage = makeTileImage(tile.el, direction)
+                rowDiv.append(tileImage);
             });
+            $('#board').append(rowDiv);
         });
     }
 
