@@ -52,9 +52,10 @@ $(function () {
             res[e.x][e.y].el = obstacle;
         });
         let objArr = _.flatten(res, 1);
-        if (_.find(objArr, el => el.el === trainer) && _.find(objArr, el => el.el === avatar)) {
+        let wasTrainerPlaced = _.find(objArr, {el: trainer});
+        let wasAvatarPlaced = _.find(objArr, {el: avatar});
+        if (wasTrainerPlaced && wasAvatarPlaced) {
             return res;
-            there
         } else {
             return generateBoard(x, y);
         }
