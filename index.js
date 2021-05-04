@@ -128,8 +128,8 @@ $(function () {
     }
 
     // takes an array of arrays and creates a div for each nested array.
-    // called on character selection
-    function renderBoard(array, direction) {
+    // called on character selection and after each move
+    function renderGameScreen(array, direction) {
         $('#board').html('');
         if (sameLocation(avatarLocation,trainerLocation)) {
             renderWinScreen();
@@ -196,7 +196,7 @@ $(function () {
             }
             stepCounter++;
             currentBoard[avatarCoords.y][avatarCoords.x].el = f;
-            renderBoard(currentBoard, direction);
+            renderGameScreen(currentBoard, direction);
         };
     })
 
@@ -215,7 +215,7 @@ $(function () {
         avatarLink = `./media/PS_${sprite}_`
         $('#selectionScreen').hide();
         currentBoard = generateBoard(randX, randY);
-        renderBoard(currentBoard, 'down');
+        renderGameScreen(currentBoard, 'down');
         $('#board').show();
     })
 });
