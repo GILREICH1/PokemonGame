@@ -25,7 +25,7 @@ $(function () {
     //   Arr[2]:  [{el: srcLink, x: 0, y: 2},{el: srcLink, x: 1, y: 2}],
     // ]
     function generateBoard(x, y) {
-        let res = [];
+        const board = [];
         for (let i = 0; i < y; i++) {
             let row = [];
             for (let j = 0; j < x; j++) {
@@ -35,27 +35,27 @@ $(function () {
                     y: i
                 });
             }
-            res.push(row);
+            board.push(row);
         }
         // place avatar
         avatarLocation = generateRandomCoords(x, y)
-        res[avatarLocation[1]][avatarLocation[0]].el = avatar;
+        board[avatarLocation[1]][avatarLocation[0]].el = avatar;
 
         // place trainer
         trainerLocation = generateRandomCoords(x, y)
-        res[trainerLocation[1]][trainerLocation[0]].el = trainer;
+        board[trainerLocation[1]][trainerLocation[0]].el = trainer;
         // place obstacles
         // obstacleArr is array of board tile elements which have format = [x, y]
         obstacleArr = generateObstacleArr(x, y);
         // lay down obstacle for each tile element
         obstacleArr.forEach((e) => {
-            res[e.x][e.y].el = obstacle;
+            board[e.x][e.y].el = obstacle;
         });
-        let objArr = _.flatten(res, 1);
+        let objArr = _.flatten(board, 1);
         let wasTrainerPlaced = _.find(objArr, {el: trainer});
         let wasAvatarPlaced = _.find(objArr, {el: avatar});
         if (wasTrainerPlaced && wasAvatarPlaced) {
-            return res;
+            return board;
         } else {
             return generateBoard(x, y);
         }
