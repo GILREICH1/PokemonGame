@@ -79,13 +79,12 @@ $(function () {
     };
 
     function selectWinImage(){
-        if (avatar === 'squirtle') {
-            $('#winImage').attr('src', "https://media.giphy.com/media/TcG7Tw3uq6tJS/giphy.gif");
-        } else if (avatar === 'pikachu') {
-            $('#winImage').attr('src', "./Media/endGame/happy_pikachu.gif");
-        } else if (avatar === 'bulbasaur') {
-            $('#winImage').attr('src', "https://img.17qq.com/images/ghfhkgpmgqy.jpeg");
-        }  
+        const winImages = {
+            squirtle: "https://media.giphy.com/media/TcG7Tw3uq6tJS/giphy.gif",
+            pikachu: "./Media/endGame/happy_pikachu.gif",
+            bulbasaur: "https://img.17qq.com/images/ghfhkgpmgqy.jpeg"
+        }
+        $('#winImage').attr('src', winImages[avatar]);
     }
 
     function renderWinScreen () {
