@@ -127,6 +127,20 @@ $(function () {
         })
     }
 
+    function renderBoard(array, direction) {
+        array.forEach(arrEl => {
+            let div = $('<span class=row></span>');
+            $('#board').append(div);
+            arrEl.forEach(el => {
+                if (el.el === avatar) {
+                    div.append(`<img src='${avatarLink}${direction}.png' id='[${el.x},${el.y}]' class='tile'></img>`);
+                } else {
+                    div.append(`<img src='${el.el}' id='${el}' class='tile'></img>`);
+                }
+            });
+        });
+    }
+
     // takes an array of arrays and creates a div for each nested array.
     // called on character selection and after each move
     function renderGameScreen(array, direction) {
@@ -134,23 +148,11 @@ $(function () {
         if (sameLocation(avatarLocation,trainerLocation)) {
             renderWinScreen();
         }
-        // if lose
         else if (isAvatarOnObstacle()) {
             renderLoseScreen();
         }
-        // if not a winning move:
         else {
-            array.forEach(arrEl => {
-                let div = $('<span class=row></span>');
-                $('#board').append(div);
-                arrEl.forEach(el => {
-                    if (el.el === avatar) {
-                        div.append(`<img src='${avatarLink}${direction}.png' id='[${el.x},${el.y}]' class='tile'></img>`);
-                    } else {
-                        div.append(`<img src='${el.el}' id='${el}' class='tile'></img>`);
-                    }
-                });
-            });
+            renderBoard(array, direction);
         }
     }
 
