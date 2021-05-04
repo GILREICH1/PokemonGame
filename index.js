@@ -115,11 +115,17 @@ $(function () {
         $('#loseScreen').show();
     }
 
+    function sameLocation(locationArray1=[],loactionArray2=[]){
+        if (locationArray1[0] !== loactionArray2[0]) return false;
+        if (locationArray1[1] !== loactionArray2[1]) return false;
+        return true;
+    }
+
     // takes an array of arrays and creates a div for each nested array.
     // called on character selection
     function renderBoard(array, direction) {
         $('#board').html('');
-        if (avatarLocation[0] === trainerLocation[0] && avatarLocation[1] === trainerLocation[1]) {
+        if (sameLocation(avatarLocation,trainerLocation)) {
             renderWinScreen();
         }
         // if lose
