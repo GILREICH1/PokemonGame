@@ -78,26 +78,30 @@ $(function () {
         return [x, y]
     };
 
+    function renderWinScreen () {
+        let winTime = (Date.now() - gameTime) / 1000;
+        let secondsPerStep = (winTime / stepCounter).toFixed(2);
+        if (avatar === 'squirtle') {
+            $('#winImage').attr('src', "https://media.giphy.com/media/TcG7Tw3uq6tJS/giphy.gif");
+        }
+        if (avatar === 'pikachu') {
+            $('#winImage').attr('src', "./Media/endGame/happy_pikachu.gif");
+        }
+        if (avatar === 'bulbasaur') {
+            $('#winImage').attr('src', "https://img.17qq.com/images/ghfhkgpmgqy.jpeg");
+        }
+
+        $('#board').hide();
+        $('#winScreen h2').text(`You won in ${stepCounter} steps and ${winTime} seconds! That's ${secondsPerStep} seconds per step! wowwwwww...`);
+        $('#winScreen').show();
+    }
+
     // takes an array of arrays and creates a div for each nested array.
     // called on character selection
     function renderBoard(array, direction) {
         $('#board').html('');
         if (avatarLocation[0] === trainerLocation[0] && avatarLocation[1] === trainerLocation[1]) {
-            let winTime = (Date.now() - gameTime) / 1000;
-            let secondsPerStep = (winTime / stepCounter).toFixed(2);
-            if (avatar === 'squirtle') {
-                $('#winImage').attr('src', "https://media.giphy.com/media/TcG7Tw3uq6tJS/giphy.gif");
-            }
-            if (avatar === 'pikachu') {
-                $('#winImage').attr('src', "./Media/endGame/happy_pikachu.gif");
-            }
-            if (avatar === 'bulbasaur') {
-                $('#winImage').attr('src', "https://img.17qq.com/images/ghfhkgpmgqy.jpeg");
-            }
-
-            $('#board').hide();
-            $('#winScreen h2').text(`You won in ${stepCounter} steps and ${winTime} seconds! That's ${secondsPerStep} seconds per step! wowwwwww...`);
-            $('#winScreen').show();
+            renderWinScreen();
         }
         // if lose
         else if (obstacleArr.some(e => avatarLocation[0] === e.y && avatarLocation[1] === e.x)) {
