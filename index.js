@@ -26,17 +26,8 @@ $(function () {
     // ]
     function generateBoard(x, y) {
         const board = [];
-        for (let i = 0; i < y; i++) {
-            let row = [];
-            for (let j = 0; j < x; j++) {
-                row.push({
-                    el: f,
-                    x: j,
-                    y: i
-                });
-            }
-            board.push(row);
-        }
+        fillBoardWithGrass(board,x, y);
+
         // place avatar
         avatarLocation = generateRandomCoords(x, y)
         board[avatarLocation[1]][avatarLocation[0]].el = avatar;
@@ -60,6 +51,20 @@ $(function () {
             return generateBoard(x, y);
         }
     };
+
+    function fillBoardWithGrass(board,x, y){
+        for (let i = 0; i < y; i++) {
+            let row = [];
+            for (let j = 0; j < x; j++) {
+                row.push({
+                    el: f,
+                    x: j,
+                    y: i
+                });
+            }
+            board.push(row);
+        }
+    }
 
     function generateObstacleArr(x, y) {
         let res = [];
