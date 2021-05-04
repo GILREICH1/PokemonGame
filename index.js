@@ -97,6 +97,20 @@ $(function () {
         $('#winScreen').show();
     }
 
+    function renderLoseScreen(){
+        if (avatar === 'squirtle') {
+            $('#loseImage').attr('src', "https://64.media.tumblr.com/59c53b5400b6755abd9d9c21a2ad4a4a/tumblr_o7wo0lCXUk1tgjlm2o1_500.gifv");
+        }
+        if (avatar === 'pikachu') {
+            $('#loseImage').attr('src', "./Media/endGame/sad_pikachu.gif");
+        }
+        if (avatar === 'bulbasaur') {
+            $('#loseImage').attr('src', "https://img.17qq.com/images/qrareqtrhqx.jpeg");
+        }
+        $('#board').hide();
+        $('#loseScreen').show();
+    }
+
     // takes an array of arrays and creates a div for each nested array.
     // called on character selection
     function renderBoard(array, direction) {
@@ -106,17 +120,7 @@ $(function () {
         }
         // if lose
         else if (obstacleArr.some(e => avatarLocation[0] === e.y && avatarLocation[1] === e.x)) {
-            if (avatar === 'squirtle') {
-                $('#loseImage').attr('src', "https://64.media.tumblr.com/59c53b5400b6755abd9d9c21a2ad4a4a/tumblr_o7wo0lCXUk1tgjlm2o1_500.gifv");
-            }
-            if (avatar === 'pikachu') {
-                $('#loseImage').attr('src', "./Media/endGame/sad_pikachu.gif");
-            }
-            if (avatar === 'bulbasaur') {
-                $('#loseImage').attr('src', "https://img.17qq.com/images/qrareqtrhqx.jpeg");
-            }
-            $('#board').hide();
-            $('#loseScreen').show();
+            renderLoseScreen();
         }
         // if not a winning move:
         else {
