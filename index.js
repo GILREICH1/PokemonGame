@@ -78,19 +78,20 @@ $(function () {
         return [x, y]
     };
 
+    function selectWinImage(){
+        if (avatar === 'squirtle') {
+            $('#winImage').attr('src', "https://media.giphy.com/media/TcG7Tw3uq6tJS/giphy.gif");
+        } else if (avatar === 'pikachu') {
+            $('#winImage').attr('src', "./Media/endGame/happy_pikachu.gif");
+        } else if (avatar === 'bulbasaur') {
+            $('#winImage').attr('src', "https://img.17qq.com/images/ghfhkgpmgqy.jpeg");
+        }  
+    }
+
     function renderWinScreen () {
         let winTime = (Date.now() - gameTime) / 1000;
         let secondsPerStep = (winTime / stepCounter).toFixed(2);
-        if (avatar === 'squirtle') {
-            $('#winImage').attr('src', "https://media.giphy.com/media/TcG7Tw3uq6tJS/giphy.gif");
-        }
-        if (avatar === 'pikachu') {
-            $('#winImage').attr('src', "./Media/endGame/happy_pikachu.gif");
-        }
-        if (avatar === 'bulbasaur') {
-            $('#winImage').attr('src', "https://img.17qq.com/images/ghfhkgpmgqy.jpeg");
-        }
-
+        selectWinImage();
         $('#board').hide();
         $('#winScreen h2').text(`You won in ${stepCounter} steps and ${winTime} seconds! That's ${secondsPerStep} seconds per step! wowwwwww...`);
         $('#winScreen').show();
