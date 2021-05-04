@@ -121,6 +121,12 @@ $(function () {
         return true;
     }
 
+    function isAvatarOnObstacle(){
+        return obstacleArr.some(({x, y}) => {
+            return avatarLocation[0] === y && avatarLocation[1] === x
+        })
+    }
+
     // takes an array of arrays and creates a div for each nested array.
     // called on character selection
     function renderBoard(array, direction) {
@@ -129,7 +135,7 @@ $(function () {
             renderWinScreen();
         }
         // if lose
-        else if (obstacleArr.some(e => avatarLocation[0] === e.y && avatarLocation[1] === e.x)) {
+        else if (isAvatarOnObstacle()) {
             renderLoseScreen();
         }
         // if not a winning move:
