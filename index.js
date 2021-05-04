@@ -105,15 +105,12 @@ $(function () {
     }
 
     function renderLoseScreen(){
-        if (avatar === 'squirtle') {
-            $('#loseImage').attr('src', "https://64.media.tumblr.com/59c53b5400b6755abd9d9c21a2ad4a4a/tumblr_o7wo0lCXUk1tgjlm2o1_500.gifv");
+        const loseImages = {
+            squirtle: "https://64.media.tumblr.com/59c53b5400b6755abd9d9c21a2ad4a4a/tumblr_o7wo0lCXUk1tgjlm2o1_500.gifv",
+            pikachu: "./Media/endGame/sad_pikachu.gif",
+            bulbasaur: "https://img.17qq.com/images/qrareqtrhqx.jpeg"
         }
-        if (avatar === 'pikachu') {
-            $('#loseImage').attr('src', "./Media/endGame/sad_pikachu.gif");
-        }
-        if (avatar === 'bulbasaur') {
-            $('#loseImage').attr('src', "https://img.17qq.com/images/qrareqtrhqx.jpeg");
-        }
+        $('#loseImage').attr('src', loseImages[avatar]);
         $('#board').hide();
         $('#loseScreen').show();
     }
