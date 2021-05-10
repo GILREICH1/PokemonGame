@@ -25,7 +25,34 @@ $(function () {
     //   Arr[2]:  [{el: srcLink, x: 0, y: 2},{el: srcLink, x: 1, y: 2}],
     // ]
     function generateBoard(x, y) {
-        let res = [];
+        const board = [];
+        fillBoardWithGrass(board,x, y);
+
+        // place avatar
+        avatarLocation = generateRandomCoords(x, y)
+        board[avatarLocation[1]][avatarLocation[0]].el = avatar;
+
+        // place trainer
+        trainerLocation = generateRandomCoords(x, y)
+        board[trainerLocation[1]][trainerLocation[0]].el = trainer;
+        // place obstacles
+        // obstacleArr is array of board tile elements which have format = [x, y]
+        obstacleArr = generateObstacleArr(x, y);
+        // lay down obstacle for each tile element
+        obstacleArr.forEach((e) => {
+            board[e.x][e.y].el = obstacle;
+        });
+        let objArr = _.flatten(board, 1);
+        let wasTrainerPlaced = _.find(objArr, {el: trainer});
+        let wasAvatarPlaced = _.find(objArr, {el: avatar});
+        if (wasTrainerPlaced && wasAvatarPlaced) {
+            return board;
+        } else {
+            return generateBoard(x, y);
+        }
+    };
+
+    function fillBoardWithGrass(board,x, y){
         for (let i = 0; i < y; i++) {
             let row = [];
             for (let j = 0; j < x; j++) {
@@ -35,97 +62,102 @@ $(function () {
                     y: i
                 });
             }
-            res.push(row);
+            board.push(row);
         }
-        // place avatar
-        avatarLocation = generateRandomCoords(x, y)
-        res[avatarLocation[1]][avatarLocation[0]].el = avatar;
-
-        // place trainer
-        trainerLocation = generateRandomCoords(x, y)
-        res[trainerLocation[1]][trainerLocation[0]].el = trainer;
-        // place obstacles
-        // obstacleArr is array of board tile elements which have format = [x, y]
-        obstacleArr = generateObstacleArr(x, y);
-        // lay down obstacle for each tile element
-        obstacleArr.forEach((e) => {
-            res[e.x][e.y].el = obstacle;
-        });
-        let objArr = _.flatten(res, 1);
-        if (_.find(objArr, el => el.el === trainer) && _.find(objArr, el => el.el === avatar)) {
-            return res;
-            there
-        } else {
-            return generateBoard(x, y);
-        }
-    };
-
-    function generateObstacleArr(x, y) {
-        let res = [];
-        for (let i = 0; i < Math.floor((y * x) * .1); i++) {
-            let obstacleCoords = generateRandomCoords(x, y)
-            res.push({
-                x: obstacleCoords[1],
-                y: obstacleCoords[0]
-            });
-        }
-        return res;
     }
 
-    function generateRandomCoords(...max) {
-        let x = Math.floor(Math.random() * max[0]);
-        let y = Math.floor(Math.random() * max[1]);
+    function generateObstacleArr(x, y) {
+        const obstacles = [];
+        const obstaclePercent = 0.1;
+        const obastaclesCount = Math.floor((y * x) * obstaclePercent);
+        for (let i = 0; i < obastaclesCount; i++) {
+            const [obstacleY, obstacleX] = generateRandomCoords(x, y)
+            obstacles.push({
+                x: obstacleX,
+                y: obstacleY
+            });
+        }
+        return obstacles;
+    }
+
+    function generateRandomCoords(xMax, yMax) {
+        const x = Math.floor(Math.random() * xMax);
+        const y = Math.floor(Math.random() * yMax);
         return [x, y]
     };
 
-    // takes an array of arrays and creates a div for each nested array.
-    // called on character selection
-    function renderBoard(array, direction) {
-        $('#board').html('');
-        if (avatarLocation[0] === trainerLocation[0] && avatarLocation[1] === trainerLocation[1]) {
-            let winTime = (Date.now() - gameTime) / 1000;
-            let secondsPerStep = (winTime / stepCounter).toFixed(2);
-            if (avatar === 'squirtle') {
-                $('#winImage').attr('src', "https://media.giphy.com/media/TcG7Tw3uq6tJS/giphy.gif");
-            }
-            if (avatar === 'pikachu') {
-                $('#winImage').attr('src', "./Media/endGame/happy_pikachu.gif");
-            }
-            if (avatar === 'bulbasaur') {
-                $('#winImage').attr('src', "https://img.17qq.com/images/ghfhkgpmgqy.jpeg");
-            }
+    function selectWinImage(){
+        const winImages = {
+            squirtle: "https://media.giphy.com/media/TcG7Tw3uq6tJS/giphy.gif",
+            pikachu: "./Media/endGame/happy_pikachu.gif",
+            bulbasaur: "https://img.17qq.com/images/ghfhkgpmgqy.jpeg"
+        }
+        $('#winImage').attr('src', winImages[avatar]);
+    }
 
-            $('#board').hide();
-            $('#winScreen h2').text(`You won in ${stepCounter} steps and ${winTime} seconds! That's ${secondsPerStep} seconds per step! wowwwwww...`);
-            $('#winScreen').show();
+    function renderWinScreen () {
+        let winTime = (Date.now() - gameTime) / 1000;
+        let secondsPerStep = (winTime / stepCounter).toFixed(2);
+        selectWinImage();
+        $('#board').hide();
+        $('#winScreen h2').text(`You won in ${stepCounter} steps and ${winTime} seconds! That's ${secondsPerStep} seconds per step! wowwwwww...`);
+        $('#winScreen').show();
+    }
+
+    function renderLoseScreen(){
+        const loseImages = {
+            squirtle: "https://64.media.tumblr.com/59c53b5400b6755abd9d9c21a2ad4a4a/tumblr_o7wo0lCXUk1tgjlm2o1_500.gifv",
+            pikachu: "./Media/endGame/sad_pikachu.gif",
+            bulbasaur: "https://img.17qq.com/images/qrareqtrhqx.jpeg"
         }
-        // if lose
-        else if (obstacleArr.some(e => avatarLocation[0] === e.y && avatarLocation[1] === e.x)) {
-            if (avatar === 'squirtle') {
-                $('#loseImage').attr('src', "https://64.media.tumblr.com/59c53b5400b6755abd9d9c21a2ad4a4a/tumblr_o7wo0lCXUk1tgjlm2o1_500.gifv");
-            }
-            if (avatar === 'pikachu') {
-                $('#loseImage').attr('src', "./Media/endGame/sad_pikachu.gif");
-            }
-            if (avatar === 'bulbasaur') {
-                $('#loseImage').attr('src', "https://img.17qq.com/images/qrareqtrhqx.jpeg");
-            }
-            $('#board').hide();
-            $('#loseScreen').show();
-        }
-        // if not a winning move:
-        else {
-            array.forEach(arrEl => {
-                let div = $('<span class=row></span>');
-                $('#board').append(div);
-                arrEl.forEach(el => {
-                    if (el.el === avatar) {
-                        div.append(`<img src='${avatarLink}${direction}.png' id='[${el.x},${el.y}]' class='tile'></img>`);
-                    } else {
-                        div.append(`<img src='${el.el}' id='${el}' class='tile'></img>`);
-                    }
-                });
+        $('#loseImage').attr('src', loseImages[avatar]);
+        $('#board').hide();
+        $('#loseScreen').show();
+    }
+
+    function sameLocation(locationArray1=[],loactionArray2=[]){
+        if (locationArray1[0] !== loactionArray2[0]) return false;
+        if (locationArray1[1] !== loactionArray2[1]) return false;
+        return true;
+    }
+
+    function isAvatarOnObstacle(){
+        return obstacleArr.some(({x, y}) => {
+            return avatarLocation[0] === y && avatarLocation[1] === x
+        })
+    }
+
+    function makeTileImage (el, direction){
+        const image = $('<img>');
+        let src = el === avatar ? `${avatarLink}${direction}.png` : el;
+        image.addClass('tile');
+        image.attr('src',src);
+        return image;
+    }
+
+    function renderBoard(board, direction) {
+        board.forEach(row => {
+            let rowDiv = $('<span class=row></span>');
+            row.forEach((tile) => {
+                const tileImage = makeTileImage(tile.el, direction)
+                rowDiv.append(tileImage);
             });
+            $('#board').append(rowDiv);
+        });
+    }
+
+    // takes an array of arrays and creates a div for each nested array.
+    // called on character selection and after each move
+    function renderGameScreen(array, direction) {
+        $('#board').html('');
+        if (sameLocation(avatarLocation,trainerLocation)) {
+            renderWinScreen();
+        }
+        else if (isAvatarOnObstacle()) {
+            renderLoseScreen();
+        }
+        else {
+            renderBoard(array, direction);
         }
     }
 
@@ -171,7 +203,7 @@ $(function () {
             }
             stepCounter++;
             currentBoard[avatarCoords.y][avatarCoords.x].el = f;
-            renderBoard(currentBoard, direction);
+            renderGameScreen(currentBoard, direction);
         };
     })
 
@@ -190,7 +222,7 @@ $(function () {
         avatarLink = `./media/PS_${sprite}_`
         $('#selectionScreen').hide();
         currentBoard = generateBoard(randX, randY);
-        renderBoard(currentBoard, 'down');
+        renderGameScreen(currentBoard, 'down');
         $('#board').show();
     })
 });
